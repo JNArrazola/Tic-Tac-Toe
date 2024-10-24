@@ -255,22 +255,27 @@ function saveBestTime(time) {
     if (!playerName) playerName = "Anónimo";
 
     let bestTimes = JSON.parse(localStorage.getItem("bestTimes")) || [];
-    bestTimes.push({ name: playerName, time: parseFloat(time) });
+
+    let currentDateTime = new Date().toLocaleString();
+
+    bestTimes.push({ name: playerName, time: parseFloat(time), date: currentDateTime });
     bestTimes.sort((a, b) => a.time - b.time);
-    bestTimes = bestTimes.slice(0, 10);
+    bestTimes = bestTimes.slice(0, 10); 
     localStorage.setItem("bestTimes", JSON.stringify(bestTimes));
     displayBestTimes();
 }
+
 
 function displayBestTimes() {
     let bestTimes = JSON.parse(localStorage.getItem("bestTimes")) || [];
     bestTimesList.innerHTML = "";
     for (let record of bestTimes) {
         let li = document.createElement("li");
-        li.textContent = `${record.name} - ${record.time} segundos`;
+        li.textContent = `${record.name} - ${record.time} segundos - ${record.date}`; 
         bestTimesList.appendChild(li);
     }
 }
+
 
 function resetGame() {
     board = ["", "", "", "", "", "", "", "", ""];
