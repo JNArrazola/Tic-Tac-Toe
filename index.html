@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tic-Tac-Toe</title>
+    <link rel="stylesheet" href="css/main_styles.css">
+</head>
+<body>
+    <canvas id="stars"></canvas>
+    
+    <div id="content">
+        <h1>Tic-Tac-Toe</h1>
+        <div id="game-container">
+            <div id="game">
+                <div class="cell" data-index="0"></div>
+                <div class="cell" data-index="1"></div>
+                <div class="cell" data-index="2"></div>
+                <div class="cell" data-index="3"></div>
+                <div class="cell" data-index="4"></div>
+                <div class="cell" data-index="5"></div>
+                <div class="cell" data-index="6"></div>
+                <div class="cell" data-index="7"></div>
+                <div class="cell" data-index="8"></div>
+            </div>
+        </div>
+        <div id="status"></div>
+        <div id="buttons">
+            <button id="minimax-button">Jugar con Minimax</button>
+            <button id="random-button" class="selected">Jugar Aleatorio</button>
+        </div>
+        <h2>Mejores Tiempos</h2>
+        <ol id="best-times"></ol>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="js/script.js"></script>
+    <script src="js/leaderboard.js"></script>
+    <script src="js/stars.js"></script> 
+</body>
+</html>

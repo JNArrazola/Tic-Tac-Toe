@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@300;500&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f0f5;
+    color: #333;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2 {
+    font-family: 'Roboto', sans-serif;
+    color: #4A4A4A;
+    margin-bottom: 10px;
+}
+
+#game-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+#game {
+    display: grid;
+    grid-template-columns: repeat(3, 120px);
+    grid-gap: 15px;
+    background-color: #fff;
+    border: 3px solid #8bc34a;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.cell {
+    width: 120px;
+    height: 120px;
+    background-color: #f0f0f5;
+    font-size: 72px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.cell:hover {
+    background-color: #c8e6c9;
+    transform: scale(1.08);
+}
+
+#status {
+    margin-top: 20px;
+    font-size: 20px;
+    color: #666;
+}
+
+#buttons {
+    margin-top: 20px;
+}
+
+#buttons button {
+    padding: 12px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 5px;
+    background-color: #8bc34a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#buttons button:hover {
+    background-color: #7cb342;
+    transform: scale(1.05);
+}
+
+#buttons button.selected {
+    background-color: #ff7043;
+    transform: scale(1.1);
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 24px;
+    margin-top: 30px;
+    text-decoration: underline;
+    color: #4caf50;
+    font-family: 'Roboto', sans-serif; 
+}
+
+#best-times {
+    margin: 20px auto;
+    width: 90%;
+    max-width: 500px;
+    background: linear-gradient(145deg, #0d1a42, #1c2a68);
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 0, 128, 0.7); 
+    padding: 20px;
+    font-size: 18px;
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+    color: #ffffff; 
+}
+
+#best-times li {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    background-color: rgba(255, 255, 255, 0.1); 
+    border-radius: 6px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.4);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#best-times li:first-child {
+    background-color: #ffd700;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.5); 
+}
+
+#best-times li:nth-child(2) {
+    background-color: #c0c0c0;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(192, 192, 192, 0.8), 0 0 20px rgba(192, 192, 192, 0.5);
+}
+
+#best-times li:nth-child(3) {
+    background-color: #cd7f32;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(205, 127, 50, 0.8), 0 0 20px rgba(205, 127, 50, 0.5);
+}
+
+#best-times li:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.05); 
+}
+
+#best-times li:hover {
+    background-color: rgba(255, 255, 255, 0.2); 
+    transform: scale(1.05); 
+}
+
+#best-times li span {
+    font-weight: bold;
+    color: #ffcc00; 
+}
+
+.winning-cell {
+    background-color: #ffd700 !important;
+    transition: background-color 1s ease-in-out, transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+    transform: scale(1.2);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.6);
+}
+
+#stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; 
+    background-color: black; 
+}
+
+#content {
+    position: relative;
+    z-index: 1;
+    color: #222; 
+}
+
+
