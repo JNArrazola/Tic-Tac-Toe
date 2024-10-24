@@ -3,6 +3,8 @@ let currentPlayer = "X";
 let gameActive = true;
 let startTime;
 let computerStrategy = "random"; 
+let timerInterval; 
+
 const winningConditions = [
     [0, 1, 2],
     [3, 4, 5],
@@ -19,6 +21,28 @@ const statusDisplay = document.getElementById('status');
 const bestTimesList = document.getElementById('best-times');
 const minimaxButton = document.getElementById('minimax-button');
 const randomButton = document.getElementById('random-button');
+const timerDisplay = document.getElementById('timer'); 
+
+// ! Timer
+function startTimer() {
+    startTime = new Date();
+    timerInterval = setInterval(updateTimer, 100); 
+}
+
+function updateTimer() {
+    const currentTime = new Date();
+    const elapsedTime = ((currentTime - startTime) / 1000).toFixed(2);
+    timerDisplay.textContent = `Tiempo: ${elapsedTime} segundos`; 
+}
+
+function stopTimer() {
+    clearInterval(timerInterval); 
+}
+
+function resetTimer() {
+    timerDisplay.textContent = "Tiempo: 0.00 segundos"; 
+    clearInterval(timerInterval); 
+}
 
 function handleCellClick(clickedCellEvent) {
     const clickedCell = clickedCellEvent.target;
@@ -28,19 +52,20 @@ function handleCellClick(clickedCellEvent) {
         return;
     }
 
-    if (!startTime) {
-        startTime = new Date();
+    if (!startTime) {  
+        startTimer();  
     }
 
     board[cellIndex] = currentPlayer;
     clickedCell.textContent = currentPlayer;
 
     if (checkResult()) {
+        stopTimer();  
         return;
     }
 
     currentPlayer = "O";
-    setTimeout(computerMove, 500);
+    setTimeout(computerMove, 500); 
 }
 
 function computerMove() {
@@ -188,6 +213,9 @@ function checkResult() {
             document.querySelector(`.cell[data-index='${index}']`).classList.add('winning-cell');
         });
 
+        updateTimer(); 
+        stopTimer(); 
+
         setTimeout(() => {
             if (currentPlayer === "X") {
                 let timeTaken = ((endTime - startTime) / 1000).toFixed(2);
@@ -201,6 +229,7 @@ function checkResult() {
                 }, 150);
             } else {
                 statusDisplay.textContent = "La computadora ha ganado.";
+                statusDisplay.style.color = "red";
                 minimaxButton.disabled = false;
                 randomButton.disabled = false;
             }
@@ -214,6 +243,7 @@ function checkResult() {
             statusDisplay.textContent = "Empate.";
             statusDisplay.style.color = "white";
         }, 100);
+        stopTimer();  
         return true;
     }
 
@@ -257,6 +287,11 @@ function selectButton(strategy) {
 
     minimaxButton.classList.remove("selected");
     randomButton.classList.remove("selected");
+
+    timerDisplay.textContent = "Tiempo: 0.00 segundos";
+    if(timerInterval) {
+        clearInterval(timerInterval);
+    }
 
     if (strategy === "minimax") {
         minimaxButton.classList.add("selected");
