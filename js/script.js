@@ -250,32 +250,60 @@ function checkResult() {
     return false;
 }
 
-function saveBestTime(time) {
+async function saveBestTime(time) {
     let playerName = prompt("¡Felicidades! Ingrese su nombre:");
-    if (!playerName) playerName = "Anónimo";
+    if (!playerName) playerName = "Anonimo";
 
-    let bestTimes = JSON.parse(localStorage.getItem("bestTimes")) || [];
+    playerName = encodeURIComponent(playerName);
 
-    let currentDateTime = new Date().toLocaleString();
+    try {
+        const response = await fetch("addscore.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams({
+                score: Math.round(time * 1000), 
+                player: playerName,
+                game: "TicTacToe-JArrazola", 
+            }),
+        });
 
-    bestTimes.push({ name: playerName, time: parseFloat(time), date: currentDateTime });
-    bestTimes.sort((a, b) => a.time - b.time);
-    bestTimes = bestTimes.slice(0, 10); 
-    localStorage.setItem("bestTimes", JSON.stringify(bestTimes));
-    displayBestTimes();
-}
+        if (!response.ok) {
+            throw new Error("Error al guardar el puntaje.");
+        }
 
-
-function displayBestTimes() {
-    let bestTimes = JSON.parse(localStorage.getItem("bestTimes")) || [];
-    bestTimesList.innerHTML = "";
-    for (let record of bestTimes) {
-        let li = document.createElement("li");
-        li.textContent = `${record.name} - ${record.time} segundos - ${record.date}`; 
-        bestTimesList.appendChild(li);
+        const result = await response.json();
+        console.log("Puntaje guardado:", result);
+        alert("¡Puntaje guardado exitosamente!");
+    } catch (error) {
+        console.error("Error al guardar el puntaje:", error);
+        alert("Hubo un error al guardar el puntaje.");
     }
 }
 
+async function displayBestTimes() {
+    try {
+        const response = await fetch("scores.php?game=TicTacToe-JArrazola&orderAsc=1");
+
+        if (!response.ok) {
+            throw new Error("Error al cargar los puntajes.");
+        }
+
+        const bestTimes = await response.json();
+
+        bestTimesList.innerHTML = "";
+
+        bestTimes.forEach((record) => {
+            const li = document.createElement("li");
+            li.textContent = `${record.player} - ${record.score} ms - ${record.date}`;
+            bestTimesList.appendChild(li);
+        });
+    } catch (error) {
+        console.error("Error al cargar los puntajes:", error);
+        alert("No se pudieron cargar los puntajes. Intenta más tarde.");
+    }
+}
 
 function resetGame() {
     board = ["", "", "", "", "", "", "", "", ""];
